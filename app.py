@@ -4,14 +4,41 @@ from selenium import webdriver
 import time
 from collections import defaultdict
 
+class Country(object):
+    def __init__(self, country, confirmed=0, deaths=0, recoverd=0):
+        self.country = country
+        self.confirmed = confirmed
+        self.deaths = deaths
+        self.recoverd = recoverd
+
+    def to_dict(self):
+        contry_dict{
+                u'cityName': self.country
+                u'cases': self.confirmed
+                u'death': self.deaths
+                u'treated': self.recoverd
+                }
+        return country_dict
+
 
 cred = credentials.Certificate('./ServiceAccountKey.json')
 default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
-collection = db.collection(u'cities')
-collection.add({
-    u'cityName': 'TestData',
-    })
+collection = db.collection(u'havalnir').document(u'cities').collection(u'cities')
+
+
+# ref = collection.stream()
+# for data in ref:
+#     print(u'{} => {}'.format(data.id, data.to_dict()))
+#     country_database = data.to_dict()
+#     if country_database['cityName'] == 'All':
+#         collection.document(data.id).update({
+#             u'cityName': '',
+#         })
+
+# collection.add({
+#     'cityName': 'NewDATA',
+#     }})
 
 URL = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
 
