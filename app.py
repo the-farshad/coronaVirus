@@ -2,34 +2,35 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from selenium import webdriver
 import time
-from collections import defaultdict
 
 
 class Country(object):
-    def __init__(self, country, confirmed=0, deaths=0, recoverd=0):
+    def __init__(self, country, confirmed=0, deaths=0, recovered=0):
         self.country = country
         self.confirmed = confirmed
         self.deaths = deaths
-        self.recoverd = recoverd
+        self.recovered = recovered
 
     def to_dict(self):
-        contry_dict: {
+        country_dict = {'countryName', {
                 u'cityName': self.country,
                 u'cases': self.confirmed,
                 u'death': self.deaths,
-                u'treated': self.recoverd,
-                }
+                u'treated': self.recovered,
+                }}
         return country_dict
 
 
-cred = credentials.Certificate('./ServiceAccountKey.json')
-default_app = firebase_admin.initialize_app(cred)
-
-db = firestore.client()
-collection = \
+def firebase_init():
+    cred = credentials.Certificate('./ServiceAccountKey.json')
+    default_app = firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    collection = \
         db.collection(u'havalnirtest').document(u'cities').collection(u'cities')
 
-ref = collection.stream()
+    ref = collection.stream()
+    return collection
+
 
 # for data in ref:
 #     print(u'{} => {}'.format(data.id, data.to_dict()))
@@ -43,116 +44,177 @@ ref = collection.stream()
 #     'cityName': 'NewDATA',
 #     })
 
-URL = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
 
-# Open Website on Browser
-driver = webdriver.Chrome()
-driver.get(URL)
+# Scrape list of countries they have confirmed cases
+def scrape_confirmed_cases(confirmed_cases_results, countries_data):
+    for confirmed_case in confirmed_cases_results:
+        # Extract the text containing number of confirmed cases and country
+        countries = confirmed_case.find_elements_by_class_name("external-html")
 
-# Wait until the website finishes loading
-time.sleep(5)
+        # Extract name of countries and number of confirmed cases and store in dictionary
+        for country in countries:
+            country_confirmed_list = country.text.split(" ", 1)
+            countries_data.update({
+                country_confirmed_list[1]: {
+                    u'cityName': country_confirmed_list[1],
+                    u'cases': int(country_confirmed_list[0].replace(",", "")),
+                    }})
 
-# Search within the Confirmed Cases section
-confirmed_cases_results = driver.find_elements_by_xpath("//*[@id='ember32']")
-total_deaths_results = driver.find_elements_by_xpath("//*[@id='ember74']")
-total_recovered_results = driver.find_elements_by_xpath("//*[@id='ember88']")
-
-countries_confirmed = defaultdict(int)
-countries_data = dict()
-for confirmed_case in confirmed_cases_results:
-    # Extract the text containing number of confirmed cases and country
-    countries = confirmed_case.find_elements_by_class_name("external-html")
-    for country in countries:
-        country_confirmed_list = country.text.split(" ", 1)
-        countries_data.update({
-            country_confirmed_list[1]: {
-                u'cityName': country_confirmed_list[1],
-                u'cases': int(country_confirmed_list[0].replace(",", "")),
-                }})
-        countries_confirmed[country_confirmed_list[1]] = \
-            int(country_confirmed_list[0].replace(",", ""))
-        print(countries_data)
+    # Find all of cases are confirmed and return them
+    return countries_data
 
 
-us_death = 0
-china_death = 0
+# Scrape total of country has death case
+def scrape_death_cases(total_deaths_results, countries_data):
 
-for total_death in total_deaths_results:
-    # Extract the text containing number of total death and country
-    death_countries = total_death.find_elements_by_class_name("external-html")
+    us_death = 0
+    china_death = 0
 
-    for death_country in death_countries:
-        death_country_list = \
-                death_country.text.replace(" deaths \n", " ").split(" ", 1)
+    for total_death in total_deaths_results:
+        # Extract the text containing number of total death and country
+        death_countries = \
+            total_death.find_elements_by_class_name("external-html")
 
-        number_of_death = int(death_country_list[0].replace(",", ""))
-        country_name = death_country_list[1].strip()
+        for death_country in death_countries:
+            death_country_list = \
+                    death_country.text.replace(" deaths \n", " ").split(" ", 1)
 
-        if country_name.find("US") >= 0:
-            us_death += number_of_death
+            number_of_death = int(death_country_list[0].replace(",", ""))
+            country_name = death_country_list[1].strip()
 
-        if country_name.find("China") >= 0:
-            china_death += number_of_death
-        else:
-            try:
-                countries_data[country_name].update({
-                   u'death': number_of_death
-                    })
-            except:
-                a = 1
+            if country_name.find("US") >= 0:
+                us_death += number_of_death
 
-    countries_data['US'].update({
-        u'death': us_death,
-        })
+            if country_name.find("China") >= 0:
+                china_death += number_of_death
+            else:
+                try:
+                    countries_data[country_name].update({
+                        u'death': number_of_death
+                        })
+                except:
+                    a = 1
 
-    countries_data['Mainland China'].update({
-        u'death': china_death,
-        })
+        countries_data['US'].update({
+            u'death': us_death,
+            })
+
+        countries_data['Mainland China'].update({
+            u'death': china_death,
+            })
+
+    return countries_data
 
 
-us_recovered = 0
-china_recoverd = 0
+def scrape_recovered_cases(total_recovered_results, countries_data):
+    us_recovered = 0
+    china_recovered = 0
 
-for total_recovered in total_recovered_results:
-    recovered_countries = \
-            total_recovered.find_elements_by_class_name("external-html")
-    for recovered_country in recovered_countries:
-        recovered_countries_list = \
+    for total_recovered in total_recovered_results:
+        recovered_countries = \
+                total_recovered.find_elements_by_class_name("external-html")
+        for recovered_country in recovered_countries:
+            recovered_countries_list = \
                 recovered_country.text.replace("recovered", "").split(" ", 1)
 
-        number_of_recovered = int(recovered_countries_list[0].replace(",", ""))
-        country_name = recovered_countries_list[1].strip()
+            number_of_recovered = \
+                int(recovered_countries_list[0].replace(",", ""))
+            country_name = recovered_countries_list[1].strip()
 
-        if country_name.find("US") >= 0:
-            us_recovered += number_of_recovered
+            if country_name.find("US") >= 0:
+                us_recovered += number_of_recovered
 
-        if country_name.find("China") >= 0:
-            china_recoverd += number_of_recovered
-        else:
+            if country_name.find("China") >= 0:
+                china_recovered += number_of_recovered
+            else:
+                try:
+                    countries_data[country_name].update({
+                        u'treated': number_of_recovered
+                        })
+                except:
+                    a = 1
+
+        countries_data['US'].update({
+            u'treated': us_recovered,
+            })
+
+        countries_data['Mainland China'].update({
+            u'treated': china_recovered,
+            })
+
+    return countries_data
+
+
+# Read data from dictionary and store  in Firebase
+def store_data_in_firebase(countries_data):
+    collection = firebase_init()
+
+    ref = collection.stream()
+    for firebase_data in ref:
+        info = firebase_data.to_dict()
+        id_ = firebase_data.id
+        for country_data in countries_data:
             try:
-                countries_data[country_name].update({
-                   u'treated': number_of_recovered
-                    })
-            except:
-                a = 1
-
-    countries_data['US'].update({
-        u'treated': us_recovered,
-        })
-
-    countries_data['Mainland China'].update({
-        u'treated': china_recoverd,
-        })
-
-    print(u'\nlast Dict{}'.format(countries_data))
-# Quit browser
-driver.quit()
+                if info['cityName'] == countries_data[country_data] and \
+                        info != country_data[country_data]:
+                    collection.document(id_).update({
+                        u'cityName': countries_data[country_data]['cityName'],
+                        u'cases': countries_data[country_data]['cases'],
+                        u'death': countries_data[country_data]['death'] if 'death' in countries_data[country_data] else 0,
+                        u'treated': countries_data[country_data]['treated'] if 'treated' in countries_data[country_data] else 0
+                        })
+            except google.cloud.exceptions:
+                print(u'We have some problem {} !'.format(google.cloud.exceptions))
+    return True
 
 
-for country_data in countries_data:
-    collection.add({
-        u'cityName': countries_data[country_data]['cityName'],
-        u'cases': countries_data[country_data]['cases'],
-        u'death': countries_data[country_data]['death'] if 'death' in countries_data[country_data] else 0,
-        u'treated': countries_data[country_data]['treated'] if 'treated' in countries_data[country_data] else 0
-        })
+def data_scraper(data_gathered):
+    URL = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
+
+    # Open Website on Browser
+    driver = webdriver.Chrome()
+    driver.get(URL)
+
+    # Wait until the website finishes loading
+    time.sleep(4)
+
+    # Scrape all of of countries have confirmed case
+    confirmed_cases_results = \
+        driver.find_elements_by_xpath("//*[@id='ember32']")
+
+    data_gathered = scrape_confirmed_cases(confirmed_cases_results, data_gathered)
+
+    # Scrape all of of countries have confirmed death
+    total_deaths_results = driver.find_elements_by_xpath("//*[@id='ember74']")
+
+    data_gathered = scrape_death_cases(total_deaths_results, data_gathered)
+
+    # Scrape all of of countries have confirmed recovered
+    total_recovered_results = \
+        driver.find_elements_by_xpath("//*[@id='ember88']")
+
+    data_gathered = \
+        scrape_recovered_cases(total_recovered_results, data_gathered)
+
+    # Quit browser
+    driver.quit()
+
+    return data_gathered
+
+
+def main():
+    # Dictionary for all of data gathering
+    countries_data = dict()
+
+    # Main Function for gathering data
+    countries_data = data_scraper(countries_data)
+
+    print(countries_data)
+
+    # Store data in Firebase
+    if store_data_in_firebase(countries_data):
+        print('Data stored in Firebase')
+
+
+if __name__ == "__main__":
+    main()
