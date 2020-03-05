@@ -58,6 +58,8 @@ def scrape_confirmed_cases(confirmed_cases_results, countries_data):
                 country_confirmed_list[1]: {
                     u'cityName': country_confirmed_list[1],
                     u'cases': int(country_confirmed_list[0].replace(",", "")),
+                    u'death': 0,
+                    u'treated': 0,
                     }})
 
     # Find all of cases are confirmed and return them
@@ -153,18 +155,30 @@ def store_data_in_firebase(countries_data):
     for firebase_data in ref:
         info = firebase_data.to_dict()
         id_ = firebase_data.id
-        for country_data in countries_data:
+        if info != {}:
+            courser = info['cityName']
             try:
-                if info['cityName'] == countries_data[country_data] and \
-                        info != country_data[country_data]:
+                flag = False
+                if info != countries_data[courser]:
+                    print(" --- >> DATA UPDATE #####")
                     collection.document(id_).update({
-                        u'cityName': countries_data[country_data]['cityName'],
-                        u'cases': countries_data[country_data]['cases'],
-                        u'death': countries_data[country_data]['death'] if 'death' in countries_data[country_data] else 0,
-                        u'treated': countries_data[country_data]['treated'] if 'treated' in countries_data[country_data] else 0
+                        u'cityName': countries_data[courser]['cityName'],
+                        u'cases': countries_data[courser]['cases'],
+                        u'death': countries_data[courser]['death'],
+                        u'treated': countries_data[courser]['treated'],
                         })
-            except google.cloud.exceptions:
-                print(u'We have some problem {} !'.format(google.cloud.exceptions))
+            except:
+                print(u'We have some problem!')
+        del countries_data[courser]
+    print(countries_data)
+    for new_country in countries_data:
+        print(" ----- >>> NEW DATA *******")
+        collection.add({
+            u'cityName': countries_data[new_country]['cityName'],
+            u'cases': countries_data[new_country]['cases'],
+            u'death': countries_data[new_country]['death'],
+            u'treated': countries_data[new_country]['treated'],
+            })
     return True
 
 
@@ -176,7 +190,7 @@ def data_scraper(data_gathered):
     driver.get(URL)
 
     # Wait until the website finishes loading
-    time.sleep(4)
+    time.sleep(6)
 
     # Scrape all of of countries have confirmed case
     confirmed_cases_results = \
