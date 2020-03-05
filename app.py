@@ -2,6 +2,9 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from selenium import webdriver
 import time
+import json
+from datetime import datetime
+import os
 
 
 class Country(object):
@@ -26,23 +29,10 @@ def firebase_init():
     default_app = firebase_admin.initialize_app(cred)
     db = firestore.client()
     collection = \
-        db.collection(u'havalnirtest').document(u'cities').collection(u'cities')
+        db.collection(u'havalnir').document(u'cities').collection(u'cities')
 
     ref = collection.stream()
     return collection
-
-
-# for data in ref:
-#     print(u'{} => {}'.format(data.id, data.to_dict()))
-#     country_database = data.to_dict()
-#     if country_database['cityName'] == 'All':
-#         collection.document(data.id).update({
-#             u'cityName': '',
-#         })
-
-# collection.add({
-#     'cityName': 'NewDATA',
-#     })
 
 
 # Scrape list of countries they have confirmed cases
@@ -150,29 +140,27 @@ def scrape_recovered_cases(total_recovered_results, countries_data):
 # Read data from dictionary and store  in Firebase
 def store_data_in_firebase(countries_data):
     collection = firebase_init()
-
     ref = collection.stream()
     for firebase_data in ref:
         info = firebase_data.to_dict()
         id_ = firebase_data.id
         if info != {}:
             courser = info['cityName']
-            try:
-                flag = False
-                if info != countries_data[courser]:
-                    print(" --- >> DATA UPDATE #####")
-                    collection.document(id_).update({
-                        u'cityName': countries_data[courser]['cityName'],
-                        u'cases': countries_data[courser]['cases'],
-                        u'death': countries_data[courser]['death'],
-                        u'treated': countries_data[courser]['treated'],
-                        })
-            except:
-                print(u'We have some problem!')
-        del countries_data[courser]
-    print(countries_data)
+            if courser in countries_data:
+                try:
+                    if info != countries_data[courser]:
+                        print(u"DATA UPDATED ----->>> {} >> {}. ######".format(courser, info))
+                        collection.document(id_).update({
+                            u'cityName': countries_data[courser]['cityName'],
+                            u'cases': countries_data[courser]['cases'],
+                            u'death': countries_data[courser]['death'],
+                            u'treated': countries_data[courser]['treated'],
+                            })
+                except:
+                    print(u'We have some problem!')
+                del countries_data[courser]
     for new_country in countries_data:
-        print(" ----- >>> NEW DATA *******")
+        print(u"NEW COUNTRY ADDED ---->>> {} >> {}. *****".format(new_country['cityName'], new_country))
         collection.add({
             u'cityName': countries_data[new_country]['cityName'],
             u'cases': countries_data[new_country]['cases'],
@@ -215,6 +203,23 @@ def data_scraper(data_gathered):
 
     return data_gathered
 
+def check_data(info):
+
+    filename = 'information.json'
+
+    if os.path.exists(filename):
+        #Read JSON data into the datastore variable
+        with open(filename, 'r') as f:
+            datastore = json.load(f)
+            
+        if datastore == info:
+            return False
+
+        # Writing JSON data
+    with open(filename, 'w') as f:
+        json.dump(info, f)
+    return True
+
 
 def main():
     # Dictionary for all of data gathering
@@ -222,12 +227,15 @@ def main():
 
     # Main Function for gathering data
     countries_data = data_scraper(countries_data)
+    
+    print(u">>> ALL DATA GATHERED >>>\n{}\n\n".format(countries_data))
 
-    print(countries_data)
-
-    # Store data in Firebase
-    if store_data_in_firebase(countries_data):
-        print('Data stored in Firebase')
+    if check_data(countries_data):
+        # Store data in Firebase
+        if store_data_in_firebase(countries_data):
+            print(u'\n>>> Firebase connection and operation successfully ended.\n# Last Updated at >>> {}.\n'.format(datetime.now()))
+    else:
+       print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now())) 
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
 #Firebase Key
 ServiceAccountKey.json
 
+*.json
+
 lass
 
 # C extensions
