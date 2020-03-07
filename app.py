@@ -182,18 +182,18 @@ def data_scraper(data_gathered):
 
     # Scrape all of of countries have confirmed case
     confirmed_cases_results = \
-        driver.find_elements_by_xpath("//*[@id='ember32']")
+        driver.find_elements_by_xpath("//*[@id='ember33']")
 
     data_gathered = scrape_confirmed_cases(confirmed_cases_results, data_gathered)
 
     # Scrape all of of countries have confirmed death
-    total_deaths_results = driver.find_elements_by_xpath("//*[@id='ember74']")
+    total_deaths_results = driver.find_elements_by_xpath("//*[@id='ember76']")
 
     data_gathered = scrape_death_cases(total_deaths_results, data_gathered)
 
     # Scrape all of of countries have confirmed recovered
     total_recovered_results = \
-        driver.find_elements_by_xpath("//*[@id='ember88']")
+        driver.find_elements_by_xpath("//*[@id='ember90']")
 
     data_gathered = \
         scrape_recovered_cases(total_recovered_results, data_gathered)
@@ -211,7 +211,7 @@ def check_data(info):
         #Read JSON data into the datastore variable
         with open(filename, 'r') as f:
             datastore = json.load(f)
-            
+
         if datastore == info:
             return False
 
@@ -227,7 +227,7 @@ def main():
 
     # Main Function for gathering data
     countries_data = data_scraper(countries_data)
-    
+
     print(u">>> ALL DATA GATHERED >>>\n{}\n\n".format(countries_data))
 
     if check_data(countries_data):
@@ -235,7 +235,7 @@ def main():
         if store_data_in_firebase(countries_data):
             print(u'\n>>> Firebase connection and operation successfully ended.\n# Last Updated at >>> {}.\n'.format(datetime.now()))
     else:
-       print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now())) 
+       print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now()))
 
 
 if __name__ == "__main__":
