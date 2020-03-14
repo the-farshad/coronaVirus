@@ -1,12 +1,15 @@
 import os
 import json
-from get_data_api import detachment
-from colors import Colors as C
-import time
+from get_data_api import detachment, total
+from kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
 
 
 def data_injection(last_api_data):
     processed_data = dict()
+
+    processed_data.update(kurdistan())
+    processed_data.update(total())
+
     new_country_added = list()
     filename_raw = 'raw_information.json'
     filename_processed = 'processed_information.json'
@@ -53,7 +56,6 @@ def data_injection(last_api_data):
                     }
                 })
 
-    print(new_country_added)
     if len(new_country_added) != 0:
         for new_country in new_country_added:
             data_raw.update({
