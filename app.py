@@ -5,6 +5,9 @@ import time
 import json
 from datetime import datetime
 import os
+from get_data_api import total
+from get_data_api import detachment
+from data_injection_json import data_injection
 
 
 class Colors:
@@ -277,9 +280,9 @@ def main():
     countries_data = dict()
 
     # Main Function for gathering data
-    countries_data = data_scraper(countries_data)
+    # countries_data = data_scraper(countries_data)
 
-    countries_data = check_data(countries_data)
+    countries_data = data_injection(total())
 
     # Show data will save in firestore
     print(u">>> ALL DATA GATHERED >>>\n{}\n\n".format(countries_data))
@@ -292,5 +295,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
