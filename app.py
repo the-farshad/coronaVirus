@@ -1,5 +1,3 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
 from selenium import webdriver
 import time
 import json
@@ -8,45 +6,8 @@ import os
 from get_data_api import total
 from get_data_api import detachment
 from data_injection_json import data_injection
-
-
-class Colors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-
-class Country(object):
-    def __init__(self, country, confirmed=0, deaths=0, recovered=0):
-        self.country = country
-        self.confirmed = confirmed
-        self.deaths = deaths
-        self.recovered = recovered
-
-    def to_dict(self):
-        country_dict = {'countryName', {
-                u'cityName': self.country,
-                u'cases': self.confirmed,
-                u'death': self.deaths,
-                u'treated': self.recovered,
-                }}
-        return country_dict
-
-
-def firebase_init():
-    cred = credentials.Certificate('./ServiceAccountKey.json')
-    default_app = firebase_admin.initialize_app(cred)
-    db = firestore.client()
-    collection = \
-        db.collection(u'havalnir').document(u'cities').collection(u'cities')
-
-    ref = collection.stream()
-    return collection
+from colors import Colors as C
+from firestore_update import store_data_in_firebase
 
 
 # Scrape list of countries they have confirmed cases
@@ -66,7 +27,6 @@ def scrape_confirmed_cases(confirmed_cases_results, countries_data):
                     u'latLong': [0,0],
                     u'zoom': 3,
                     u'cases': int(country_confirmed_list[0].replace(",", "")),
-                    u'death': 0,
                     u'treated': 0,
                     u'priority': 999,
                     }})
@@ -156,64 +116,6 @@ def scrape_recovered_cases(total_recovered_results, countries_data):
     return countries_data
 
 
-# Read data from dictionary and store  in Firebase
-def store_data_in_firebase(countries_data):
-    collection = firebase_init()
-    ref = collection.stream()
-    for firebase_data in ref:
-        info = firebase_data.to_dict()
-        id_ = firebase_data.id
-        if info != {}:
-            courser = info['cityName']
-            if courser in countries_data:
-                if info['cases'] != countries_data[courser]['cases'] or info['death'] != countries_data[courser]['death'] or info['treated'] != countries_data[courser]['treated']:
-                    latitude = countries_data[courser]['latLong'][0]
-                    longitude = countries_data[courser]['latLong'][1]
-                    try:
-                        collection.document(id_).update({
-                            u'cityName': countries_data[courser]['cityName'],
-                            u'countryName_KU': countries_data[courser]['countryName_KU'],
-                            u'cases': countries_data[courser]['cases'],
-                            u'death': countries_data[courser]['death'],
-                            u'treated': countries_data[courser]['treated'],
-                            u'bearing': countries_data[courser]['bearing'],
-                            u'latLong': firestore.GeoPoint(latitude, longitude),
-                            u'priority': countries_data[courser]['priority'],
-                            u'zoom': countries_data[courser]['zoom'],
-                            })
-                    except:
-                        print(u'We have some problem!')
-                    else:
-                        print(u"{}DATA UPDATED ----->>> {}{} >> {}. ######".format(
-                            Colors.WARNING,
-                            Colors.ENDC,
-                            courser,
-                            info
-                            ))
-                del countries_data[courser]
-    for new_country in countries_data:
-        print(u"{}NEW COUNTRY ADDED ---->>>{} {} >> {}. *****".format(
-            Colors.FAIL,
-            Colors.ENDC,
-            new_country,
-            countries_data[new_country]
-            ))
-        latitude = countries_data[new_country]['latLong'][0]
-        longitude = countries_data[new_country]['latLong'][1]
-        collection.add({
-            u'cityName': countries_data[new_country]['cityName'],
-            u'cases': countries_data[new_country]['cases'],
-            u'death': countries_data[new_country]['death'],
-            u'treated': countries_data[new_country]['treated'],
-            u'countryName_KU': countries_data[new_country]['countryName_KU'],
-            u'bearing': countries_data[new_country]['bearing'],
-            u'latLong': firestore.GeoPoint(latitude, longitude),
-            u'priority': countries_data[new_country]['priority'],
-            u'zoom': countries_data[new_country]['zoom'],
-            })
-    return True
-
-
 def data_scraper(data_gathered):
     URL = "https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
 
@@ -282,7 +184,7 @@ def main():
     # Main Function for gathering data
     # countries_data = data_scraper(countries_data)
 
-    countries_data = data_injection(total())
+    countries_data = data_injection(detachment())
 
     # Show data will save in firestore
     print(u">>> ALL DATA GATHERED >>>\n{}\n\n".format(countries_data))
