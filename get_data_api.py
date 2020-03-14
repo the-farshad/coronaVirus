@@ -15,7 +15,7 @@ def total():
             'world': {
                 u'countryKurdishName': 'جیهان',
                 u'cases': data_all['cases'],
-                u'recovered': data_all['recovered'], 
+                u'recovered': data_all['recovered'],
                 u'deaths': data_all['deaths'],
                 u'todayCases': 0,
                 u'todayDeaths': 0,
@@ -27,7 +27,7 @@ def total():
                 u'priority': -1,
                 }
             }
-        return world
+        return data_all
     else:
         return False
 

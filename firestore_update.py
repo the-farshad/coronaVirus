@@ -5,14 +5,15 @@ from colors import Colors as C
 
 
 def firebase_init():
-    cred = credentials.Certificate('./ServiceAccountKey.json')
-    default_app = firebase_admin.initialize_app(cred)
+    if (not len(firebase_admin._apps)):
+        cred = credentials.Certificate('./ServiceAccountKey.json')
+        default_app = firebase_admin.initialize_app(cred)
     db = firestore.client()
     collection = \
         db.collection(u'havalnir').document(u'cities').collection(u'cities')
 
-    ref = collection.stream()
     return collection
+
 
 # Read data from dictionary and store  in Firebase
 def store_data_in_firebase(countries_data):

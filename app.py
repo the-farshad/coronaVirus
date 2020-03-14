@@ -3,11 +3,11 @@ import time
 import json
 from datetime import datetime
 import os
-from get_data_api import total
-from get_data_api import detachment
-from data_injection_json import data_injection
 from colors import Colors as C
+from get_data_api import detachment, total
+from data_injection_json import data_injection
 from firestore_update import store_data_in_firebase
+from store_global_data import store_global
 
 
 # Scrape list of countries they have confirmed cases
@@ -185,6 +185,7 @@ def main():
     # countries_data = data_scraper(countries_data)
 
     countries_data = data_injection(detachment())
+    print(C.WARNING, store_global(total()), C.ENDC)
 
     # Show data will save in firestore
     print(u">>> ALL DATA GATHERED >>>\n{}\n\n".format(countries_data))

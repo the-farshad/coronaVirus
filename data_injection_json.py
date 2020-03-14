@@ -8,7 +8,6 @@ def data_injection(last_api_data):
     processed_data = dict()
 
     processed_data.update(kurdistan())
-    processed_data.update(total())
 
     new_country_added = list()
     filename_raw = 'raw_information.json'
