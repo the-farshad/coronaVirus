@@ -15,7 +15,7 @@ def firebase_init():
 
 
 def store_global(global_data):
-    print(global_data)
+    print(C.BOLD, C.OKBLUE, global_data, C.ENDC)
     collection = firebase_init()
     collection.set({
         u'cases': global_data['cases'],

@@ -1,5 +1,6 @@
 import requests
 import bs4
+from colors import Colors as C
 
 
 URL = 'https://gov.krd/coronavirus-en/situation-update/#moh-monitoring'
@@ -48,6 +49,7 @@ def kurdistan_data_gathered():
                     u'active': int(text.split(':')[1])
                     })
 
+        print(C.FAIL, C.UNDERLINE, kurdistan, C.ENDC)
         return kurdistan
     else:
         return False
