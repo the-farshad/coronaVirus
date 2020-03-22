@@ -1,6 +1,7 @@
 #Firebase Key
 ServiceAccountKey.json
 
+*.pyc
 
 lass
 
