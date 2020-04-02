@@ -2,6 +2,8 @@ import os
 import json
 from get_data_api import detachment, total
 from kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
+from file_check import file_exists_check as exist
+from file_check import file_abs_path as path
 
 
 def data_injection(last_api_data):
@@ -13,8 +15,8 @@ def data_injection(last_api_data):
     filename_raw = 'raw_information.json'
     filename_processed = 'processed_information.json'
 
-    if os.path.exists(filename_raw):
-        with open(filename_raw, 'r') as fr:
+    if exist(filename_raw):
+        with open((path() + filename_raw), 'r') as fr:
             data_raw = json.load(fr)
 
     for api_data in last_api_data:

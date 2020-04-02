@@ -2,11 +2,12 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from data_injection_json import data_injection
 from colors import Colors as C
+from file_check import file_abs_path as path
 
 
 def firebase_init():
     if (not len(firebase_admin._apps)):
-        cred = credentials.Certificate('./ServiceAccountKey.json')
+        cred = credentials.Certificate(path() + 'ServiceAccountKey.json')
         default_app = firebase_admin.initialize_app(cred)
     db = firestore.client()
     collection = \

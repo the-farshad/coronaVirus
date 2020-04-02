@@ -2,10 +2,10 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from colors import Colors as C
 from get_data_api import total
-
+from file_check import file_abs_path as path
 
 def firebase_init():
-    cred = credentials.Certificate('./ServiceAccountKey.json')
+    cred = credentials.Certificate(path() + 'ServiceAccountKey.json')
     default_app = firebase_admin.initialize_app(cred)
     db = firestore.client()
     collection = \
