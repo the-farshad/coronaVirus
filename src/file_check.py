@@ -5,7 +5,6 @@ def file_exists_check(file_name):
     file_path = file_abs_path()
     file_status = os.path.exists(file_path + file_name)
 
-    print(file_status)
     return file_status
 
 

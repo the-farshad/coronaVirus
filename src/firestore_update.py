@@ -3,13 +3,11 @@ from firebase_admin import credentials, firestore
 from data_injection_json import data_injection
 from colors import Colors as C
 from file_check import file_abs_path as path
+from firestore_initial import firebase_initial as fire
 
 
-def firebase_init():
-    if (not len(firebase_admin._apps)):
-        cred = credentials.Certificate(path() + 'ServiceAccountKey.json')
-        default_app = firebase_admin.initialize_app(cred)
-    db = firestore.client()
+def firestore_init():
+    db = fire()
     collection = \
         db.collection(u'havalnir').document(u'cities').collection(u'cities')
 
@@ -18,7 +16,7 @@ def firebase_init():
 
 # Read data from dictionary and store  in Firebase
 def store_data_in_firebase(countries_data):
-    collection = firebase_init()
+    collection = firestore_init()
     ref = collection.stream()
     for firebase_data in ref:
         info = firebase_data.to_dict()

@@ -6,4 +6,5 @@ from webapp.views import (
 app_name = 'webapp'
 urlpatterns=[
         path('', home_view, name='home'),
+        path('/countries', countries_view, name='countries'),
         ]
