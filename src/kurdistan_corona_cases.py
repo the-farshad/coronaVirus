@@ -1,6 +1,6 @@
 import requests
 import bs4
-from colors import Colors as C
+from .colors import Colors as C
 
 
 URL = 'https://gov.krd/coronavirus-en/situation-update/#moh-monitoring'
@@ -31,6 +31,15 @@ def kurdistan_data_gathered():
                         u'bearing': 1,
                         u'zoom': 4,
                         u'priority': -1,
+                        u'deathsPerOneMillion': 0,
+                        u'tests': 0,
+                        u'testsPerOneMillion': 0,
+                        u'_id': 0,
+                        u'iso2': 'kd',
+                        u'iso3': 'krd',
+                        u'lat': 36,
+                        u'long': 43,
+                        u'flag': 'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kurdistan.svg'
                         }
                     })
 

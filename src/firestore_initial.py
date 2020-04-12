@@ -1,6 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-from file_check import file_abs_path as path
+from .file_check import file_abs_path as path
 
 
 def firebase_initial():

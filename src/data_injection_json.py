@@ -1,9 +1,9 @@
 import os
 import json
-from get_data_api import detachment, total
-from kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
-from file_check import file_exists_check as exist
-from file_check import file_abs_path as path
+from .get_data_api import detachment, total
+from .kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
+from .file_check import file_exists_check as exist
+from .file_check import file_abs_path as path
 
 
 def data_injection(last_api_data):
@@ -36,6 +36,17 @@ def data_injection(last_api_data):
                     u'longitude': data_raw[country]['longitude'],
                     u'zoom': data_raw[country]['zoom'],
                     u'priority': data_raw[country]['priority'],
+                    u'active': api_data['active'],
+                    u'casesPerOneMillion': api_data['casesPerOneMillion'],
+                    u'deathsPerOneMillion': api_data['deathsPerOneMillion'],
+                    u'tests': api_data['tests'],
+                    u'testsPerOneMillion': api_data['testsPerOneMillion'],
+                    u'_id': api_data['countryInfo']['_id'],
+                    u'iso2': api_data['countryInfo']['iso2'],
+                    u'iso3': api_data['countryInfo']['iso3'],
+                    u'lat': api_data['countryInfo']['lat'],
+                    u'long': api_data['countryInfo']['long'],
+                    u'flag': api_data['countryInfo']['flag'],
                     }
                 })
         else:
@@ -49,6 +60,17 @@ def data_injection(last_api_data):
                     u'todayDeaths': api_data['todayDeaths'],
                     u'recovered': api_data['recovered'],
                     u'critical': api_data['critical'],
+                    u'active': api_data['active'],
+                    u'casesPerOneMillion': api_data['casesPerOneMillion'],
+                    u'deathsPerOneMillion': api_data['deathsPerOneMillion'],
+                    u'tests': api_data['tests'],
+                    u'testsPerOneMillion': api_data['testsPerOneMillion'],
+                    u'_id': api_data['countryInfo']['_id'],
+                    u'iso2': api_data['countryInfo']['iso2'],
+                    u'iso3': api_data['countryInfo']['iso3'],
+                    u'lat': api_data['countryInfo']['lat'],
+                    u'long': api_data['countryInfo']['long'],
+                    u'flag': api_data['countryInfo']['flag'],
                     u'bearing': 0.5,
                     u'latitude': 0,
                     u'longitude': 0,

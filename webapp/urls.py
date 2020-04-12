@@ -1,10 +1,12 @@
-from django.urls import path
+from django.urls import re_path
 from webapp.views import (
-        home_view,
-        )
+    countries_view,
+    database_update,
+    )
+
 
 app_name = 'webapp'
-urlpatterns=[
-        path('', home_view, name='home'),
-        path('/countries', countries_view, name='countries'),
-        ]
+urlpatterns = [
+    re_path(r'^update/?$', database_update, name='database_update'),
+    re_path(r'^$', countries_view, name='countries'),
+    ]

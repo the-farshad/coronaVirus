@@ -1,5 +1,5 @@
-from firestore_initial import firebase_initial as fire
-from get_weather_api import get_weather
+from .firestore_initial import firebase_initial as fire
+from .get_weather_api import get_weather
 from datetime import datetime
 
 

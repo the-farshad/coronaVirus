@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import requests
-from colors import Colors as C
 import time
+import requests
+from .colors import Colors as C
+
+
 URL_ALL = 'https://corona.lmao.ninja/all'
 URL_COUNTRIES = 'https://corona.lmao.ninja/countries'
 
@@ -18,9 +20,9 @@ def total():
                 u'cases': data_all['cases'],
                 u'recovered': data_all['recovered'],
                 u'deaths': data_all['deaths'],
-                u'todayCases': 0,
-                u'todayDeaths': 0,
-                u'critical': 0,
+                u'todayCases': data_all['todayCases'],
+                u'todayDeaths': data_all['todayDeaths'],
+                u'critical': data_all['critical'],
                 u'latitude': 36.1674,
                 u'longitude': 43.9812,
                 u'bearing': 1,
@@ -45,7 +47,6 @@ def detachment():
 
 def get_data_from_api():
     for data in detachment():
-        time.sleep(.5)
         print(C.OKBLUE, data, C.ENDC)
     print(C.WARNING, total(), C.ENDC)
 

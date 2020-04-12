@@ -1,9 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-from colors import Colors as C
-from get_data_api import total
-from file_check import file_abs_path as path
-from firestore_initial import firebase_initial as fire
+from .colors import Colors as C
+from .get_data_api import total
+from .file_check import file_abs_path as path
+from .firestore_initial import firebase_initial as fire
 
 def firestore_init():
     db = fire()

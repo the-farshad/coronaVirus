@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="text-center alert alert-success " role="alert">
+<form method="POST" action="update/">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg text-center">Update Database</button>
+</form>
+</div>
+
+<div class="row">
+    {% for item in object_list%}
+    <div class="col-sm-3">
+        <div class="card">
+            <img class="card-img-top rounded img-thumbnail" src="{{item.flag}}" alt="{{item.country}} Flag">
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{item.country}}
+                </h5>
+                <p class="card-text">
+                    {{item.countryKurdishName}}
+                </p>
+                <a href="https://www.google.com/search?&q={{item.country}}" class="btn btn-primary">
+                    More Details
+                </a>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Cases: {{item.cases}}
+                </li>
+                <li class="list-group-item">
+                    Today Cases: {{item.todayCases}}
+                </li>
+                <li class="list-group-item">
+                    Deaths: {{item.deaths}}
+                </li>
+                <li class="list-group-item">
+                    Today Deaths: {{item.todayDeaths}}
+                </li>
+                <li class="list-group-item">
+                    Recovered: {{item.recovered}}
+                </li>
+                <li class="list-group-item">
+                    Active: {{item.active}}
+                </li>
+                <li class="list-group-item">
+                    Critical: {{item.critical}}
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="https://en.wikipedia.org/wiki/{{item.country}}" class="card-link">Wikipedia</a>
+                <a href="http://maps.google.com/?q={{item.country}}" class="card-link">Maps</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

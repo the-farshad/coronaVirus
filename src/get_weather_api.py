@@ -2,8 +2,8 @@
 import os
 import json
 import requests
-from file_check import file_abs_path as path
-from file_check import file_exists_check as exist
+from .file_check import file_abs_path as path
+from .file_check import file_exists_check as exist
 
 
 URL = "https://api.openweathermap.org/data/2.5/weather?q="

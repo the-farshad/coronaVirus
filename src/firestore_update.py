@@ -1,9 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-from data_injection_json import data_injection
-from colors import Colors as C
-from file_check import file_abs_path as path
-from firestore_initial import firebase_initial as fire
+from .data_injection_json import data_injection
+from .colors import Colors as C
+from .file_check import file_abs_path as path
+from .firestore_initial import firebase_initial as fire
 
 
 def firestore_init():
@@ -15,7 +15,8 @@ def firestore_init():
 
 
 # Read data from dictionary and store  in Firebase
-def store_data_in_firebase(countries_data):
+def store_data_in_firebase(input_data):
+    countries_data = input_data.copy()
     collection = firestore_init()
     ref = collection.stream()
     for firebase_data in ref:
