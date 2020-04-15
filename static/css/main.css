@@ -1,0 +1,38 @@
+{
+    font-family: 'sans';
+
+    src: url('../static/fonts/sans-bold/IRANSans-Bold.eot?#') format('eot'),  /* IE6�8 */
+    url('../static/fonts/sans-bold/IRANSans-Bold.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
+    url('../static/fonts/sans-bold/IRANSans-Bold.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    font-weight: bold;
+
+}
+
+@font-face {
+    font-family: 'sans-light';
+    src: url('../static/fonts/sans-light/IRANSans.eot?#') format('eot'),  /* IE6�8 */
+    url('../static/fonts/sans-light/IRANSans.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
+    url('../static/fonts/sans-light/IRANSans.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    font-weight: 200;
+
+}
+@font-face {
+    font-family: 'sans-ultra';
+    src: url('../static/fonts/sans-ultra-light/IRAN-Sans-Ultra-Light.eot?#') format('eot'),  /* IE6�8 */
+    url('../static/fonts/sans-ultra-light/IRAN-Sans-Ultra-Light.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
+    url('../static/fonts/sans-ultra-light/IRAN-Sans-Ultra-Light.woff') format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    font-weight: 200;
+
+}
+
+
+body{
+	background: red;
+        font-family: sans-ultra !important;
+        
+}
+
+h1,h2,h3,h4,h5,h6{
+        font-family: sans !important;
+        
+}

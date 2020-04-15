@@ -1,6 +1,7 @@
 #Firebase Key
 ServiceAccountKey.json
 WeatherAPI.json
+Exchange_rate_api.json
 *.pyc
 
 lass

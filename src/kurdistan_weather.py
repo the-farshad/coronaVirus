@@ -24,9 +24,14 @@ def firestore_weather_data():
                     'feels_like': round((details['data']['main']['feels_like'] - 273.15), 2),
                     'temperature_min': round((details['data']['main']['temp_min'] - 273.15), 2),
                     'temperature_max': round((details['data']['main']['temp_max'] - 273.15), 2),
+                    'pressure': details['data']['main']['pressure'],
+                    'humidity': details['data']['main']['humidity'],
                     'wind_speed': (details['data']['wind']['speed']),
                     'sunrise': datetime.fromtimestamp(details['data']['sys']['sunrise']),
                     'sunset': datetime.fromtimestamp(details['data']['sys']['sunset']),
+                    'weather_main': details['data']['weather'][0]['main'],
+                    'weather_description': details['data']['weather'][0]['description'],
+                    'weather_icon': details['data']['weather'][0]['icon'],
                     })
     else:
         print('Ohhh, we had a problem! :| ')

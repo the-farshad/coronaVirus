@@ -6,6 +6,7 @@ from .get_data_api import detachment, total
 from .data_injection_json import data_injection
 from .firestore_update import store_data_in_firebase
 from .kurdistan_weather import firestore_weather_data
+from .exchange_rate_firestore import firestore_rate_data
 
 
 def main():
@@ -26,7 +27,10 @@ def main():
             print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now()))
 
     # Get data from api and save in firebase database
-    # firestore_weather_data()
+    firestore_weather_data()
+
+    firestore_rate_data()
+
 
     return countries_data
 
