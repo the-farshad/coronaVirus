@@ -40,7 +40,8 @@ def get_weather():
                 response_status = response.status_code
                 if response_status == 200:
                     weather[city] = {
-                        'kurdish_name': cities[city],
+                        'kurdish_name': cities[city][0],
+                        'priority': cities[city][1],
                         'data': response.json()
                     }
                 else:

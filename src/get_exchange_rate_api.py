@@ -7,11 +7,11 @@ from .file_check import file_exists_check as exist
 
 
 URL = "http://data.fixer.io/api/latest?access_key="
-SYMBOLS = "&symbols=IQD,EUR,USD,GBP,CAD,JYP,IRR,TRY"
+SYMBOLS = "&symbols=USD,GBP,EUR,TRY,IRR,IQD"
 
 
 def api_key_check():
-    filename = 'exchange_rate_api.json'
+    filename = 'Exchange_rate_api.json'
     if exist(filename):
         with open((path() + filename), 'r') as fr:
             api_read = json.load(fr)
@@ -22,7 +22,7 @@ def api_key_check():
 def get_rate():
     rate = dict()
     api = api_key_check()
-    if api:
+    if api_key_check():
         response = requests.get(URL+api, timeout=5)
         response_status = response.status_code
         if response_status == 200:

@@ -26,6 +26,7 @@ class Countries(models.Model):
     zoom = models.DecimalField(max_digits=4, decimal_places=2)
     priority = models.IntegerField()
     flag = models.URLField(max_length=200, default='')
+    updated = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return f'{self.iso3} --> {self.country}'

@@ -32,7 +32,9 @@ def firestore_weather_data():
                     'weather_main': details['data']['weather'][0]['main'],
                     'weather_description': details['data']['weather'][0]['description'],
                     'weather_icon': details['data']['weather'][0]['icon'],
+                    'priority': details['priority']
                     })
+        print(u"Kurdistan weather updated in {}, without error!>>> ".format(datetime.now()))
     else:
         print('Ohhh, we had a problem! :| ')
 

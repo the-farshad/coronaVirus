@@ -1,3 +1,4 @@
+from datetime import datetime
 import firebase_admin
 from firebase_admin import credentials, firestore
 from .data_injection_json import data_injection
@@ -42,6 +43,7 @@ def store_data_in_firebase(input_data):
                             u'latLong': firestore.GeoPoint(latitude, longitude),
                             u'priority': countries_data[courser]['priority'],
                             u'zoom': countries_data[courser]['zoom'],
+                            u'updated': datetime.fromtimestamp(countries_data[courser]['updated']/1000),
                             })
                     except:
                         print(u'We have some problem!')
@@ -76,6 +78,7 @@ def store_data_in_firebase(input_data):
             u'latLong': firestore.GeoPoint(latitude, longitude),
             u'priority': countries_data[new_country]['priority'],
             u'zoom': countries_data[new_country]['zoom'],
+            u'updated': datetime.fromtimestamp(countries_data[new_country]['updated']/1000),
             })
     return True
 

@@ -1,3 +1,4 @@
+from time import time
 import requests
 import bs4
 from .colors import Colors as C
@@ -39,7 +40,8 @@ def kurdistan_data_gathered():
                         u'iso3': 'krd',
                         u'lat': 36,
                         u'long': 43,
-                        u'flag': 'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kurdistan.svg'
+                        u'flag': 'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kurdistan.svg',
+                        u'updated': (time()*1000),
                         }
                     })
 

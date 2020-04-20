@@ -4,6 +4,8 @@ from .firestore_initial import firebase_initial as fire
 from .get_exchange_rate_api import get_rate
 
 
+PRIORITY = {"USD":1, "GBP":2, "EUR":3, "TRY":4, "IRR":5, "IQD":6}
+
 def firestore_init():
     db = fire()
     collection = \
@@ -20,9 +22,9 @@ def firestore_rate_data():
         rates = rate_data['rates']
 
         for rate in rates:
-            details = rates[rate]
             collection.document(rate).set({
                 'currency': rate,
+                'priority': PRIORITY[rate],
                 'rate': 100 * (rates['IQD']/rates[rate]),
                 })
         collection.document('updated').set({'updated': datetime.fromtimestamp(update_time)})

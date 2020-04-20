@@ -41,5 +41,6 @@ def database_update(request, *args, **kwargs):
                 _id=data_gathered[data]['_id'],
                 iso2=data_gathered[data]['iso2'],
                 iso3=data_gathered[data]['iso3'],
+                updated=data_gathered[data]['updated']
             )
     return JsonResponse(data_gathered, JSONEncoder)

@@ -1,5 +1,6 @@
 import os
 import json
+
 from .get_data_api import detachment, total
 from .kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
 from .file_check import file_exists_check as exist
@@ -47,6 +48,7 @@ def data_injection(last_api_data):
                     u'lat': api_data['countryInfo']['lat'],
                     u'long': api_data['countryInfo']['long'],
                     u'flag': api_data['countryInfo']['flag'],
+                    u'updated': api_data['updated'],
                     }
                 })
         else:
@@ -76,6 +78,7 @@ def data_injection(last_api_data):
                     u'longitude': 0,
                     u'zoom': 3,
                     u'priority': 999,
+                    u'updated': api_data['updated'],
                     }
                 })
 

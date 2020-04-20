@@ -4,8 +4,8 @@ import requests
 from .colors import Colors as C
 
 
-URL_ALL = 'https://corona.lmao.ninja/all'
-URL_COUNTRIES = 'https://corona.lmao.ninja/countries'
+URL_ALL = 'https://corona.lmao.ninja/v2/all'
+URL_COUNTRIES = 'https://corona.lmao.ninja/v2/countries'
 
 
 def total():
