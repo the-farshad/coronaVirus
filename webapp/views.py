@@ -46,3 +46,7 @@ def database_update(request, *args, **kwargs):
                 continent=data_gathered[data]['continent']
             )
     return JsonResponse(data_gathered, JSONEncoder)
+
+
+def handler404(request, *args, **kwargs):
+    return redirect('/')
