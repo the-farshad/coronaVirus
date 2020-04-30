@@ -4,14 +4,14 @@ from json import JSONEncoder
 
 from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
-from .models import Countries
+from .models import Country
 from getdata import main
 
 
 # Create your views here.
 def countries_view(request):
     # list of countries show in page
-    queryset = Countries.objects.all()
+    queryset = Country.objects.all()
     context = {
         'object_list': queryset,
     }
@@ -20,10 +20,10 @@ def countries_view(request):
 
 def database_update(request, *args, **kwargs):
     data_gathered = main()
-    Countries.objects.all().delete()
+    Country.objects.all().delete()
     for data in data_gathered:
         if data_gathered[data]['_id'] is not None:
-            Countries.objects.create(
+            Country.objects.create(
                 country=data,
                 countryKurdishName=data_gathered[data]['countryKurdishName'],
                 cases=data_gathered[data]['cases'],

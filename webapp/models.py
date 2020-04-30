@@ -5,7 +5,7 @@ from django.urls import reverse
 
 
 # Create your models here.
-class Countries(models.Model):
+class Country(models.Model):
     country = models.CharField(max_length=50, default='', verbose_name='Country Name')
     countryKurdishName = models.CharField(max_length=50, default='', verbose_name='Kurdish Name')
     _id = models.IntegerField(default=0)
@@ -31,3 +31,7 @@ class Countries(models.Model):
 
     def __str__(self):
         return f'{self.iso3} --> {self.country}'
+
+    class Meta:
+        verbose_name = 'Country List'
+        verbose_name_plural = 'Countries List'
