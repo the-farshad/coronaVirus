@@ -27,6 +27,7 @@ class Countries(models.Model):
     priority = models.IntegerField()
     flag = models.URLField(max_length=200, default='')
     updated = models.DateTimeField(auto_now_add=True, blank=True)
+    continent = models.CharField(max_length=20, default='', blank=True)
 
     def __str__(self):
         return f'{self.iso3} --> {self.country}'

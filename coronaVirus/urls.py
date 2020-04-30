@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('webapp/', include('webapp.urls')),
+    path('telegramapi/', include('telegramapi.urls')),
     path('admin/', admin.site.urls),
 ]

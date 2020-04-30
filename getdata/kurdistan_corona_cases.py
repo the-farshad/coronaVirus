@@ -41,7 +41,8 @@ def kurdistan_data_gathered():
                         u'lat': 36,
                         u'long': 43,
                         u'flag': 'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kurdistan.svg',
-                        u'updated': (time()*1000),
+                        u'updated': (time() * 1000),
+                        u'continent': 'Asia'
                         }
                     })
 

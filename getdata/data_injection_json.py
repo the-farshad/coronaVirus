@@ -49,6 +49,7 @@ def data_injection(last_api_data):
                     u'long': api_data['countryInfo']['long'],
                     u'flag': api_data['countryInfo']['flag'],
                     u'updated': api_data['updated'],
+                    u'continent': api_data['continent'],
                     }
                 })
         else:
@@ -79,6 +80,7 @@ def data_injection(last_api_data):
                     u'zoom': 3,
                     u'priority': 999,
                     u'updated': api_data['updated'],
+                    u'continent': api_data['continent'],
                     }
                 })
 

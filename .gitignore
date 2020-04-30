@@ -3,7 +3,8 @@ ServiceAccountKey.json
 WeatherAPI.json
 Exchange_rate_api.json
 *.pyc
-
+env_vars.bash
+.env
 lass
 
 # C extensions

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export CV_DB_NAME='' # Database name
+export CV_DB_USER='' # Username value
+export CV_DB_PASSWORD='' # Password value
+export CV_DB_HOST='' # Datase host ip value
+export CV_DB_PORT='' # Database host port value

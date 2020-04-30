@@ -44,6 +44,7 @@ def store_data_in_firebase(input_data):
                             u'priority': countries_data[courser]['priority'],
                             u'zoom': countries_data[courser]['zoom'],
                             u'updated': datetime.fromtimestamp(countries_data[courser]['updated']/1000),
+                            u'continent': countries_data[courser]['continent'],
                             })
                     except:
                         print(u'We have some problem!')
@@ -79,6 +80,7 @@ def store_data_in_firebase(input_data):
             u'priority': countries_data[new_country]['priority'],
             u'zoom': countries_data[new_country]['zoom'],
             u'updated': datetime.fromtimestamp(countries_data[new_country]['updated']/1000),
+            u'continent': countries_data[new_country]['continent'],
             })
     return True
 
