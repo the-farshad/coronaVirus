@@ -1,12 +1,28 @@
-#Firebase Key
+# Firebase Key
 ServiceAccountKey.json
+
+# Weather API Key
 WeatherAPI.json
+
+# Exchange Rate API Key
 Exchange_rate_api.json
-*.pyc
-env_vars.bash
+
+# Docker Compose Information
 .env
+
+# Environment variable to set DB conection
+env_vars.bash
+
+# Every update time updated with new data
+processed_information.json
+
+# Visual Studio Code
 .vscode
+
 lass
+
+# Python cache files
+*.pyc
 
 # C extensions
 *.so
