@@ -5,6 +5,7 @@ Exchange_rate_api.json
 *.pyc
 env_vars.bash
 .env
+.vscode
 lass
 
 # C extensions
