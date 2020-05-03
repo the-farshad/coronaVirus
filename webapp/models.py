@@ -45,3 +45,7 @@ class Country(models.Model):
     class Meta:
         verbose_name = 'Country List'
         verbose_name_plural = 'Countries List'
+        ordering = ['priority']
+        indexes = [
+            models.Index(fields=['country'], name='country')
+        ]

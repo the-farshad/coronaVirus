@@ -25,7 +25,8 @@ def data_injection(last_api_data):
             processed_data.update({
                 country: {
                     u'country': country,
-                    u'countryKurdishName': data_raw[country]['countryKurdishName'],
+                    u'countryKurdishName':
+                        data_raw[country]['countryKurdishName'],
                     u'cases': api_data['cases'],
                     u'todayCases': api_data['todayCases'],
                     u'deaths': api_data['deaths'],
@@ -89,6 +90,7 @@ def data_injection(last_api_data):
         for new_country in new_country_added:
             data_raw.update({
                 new_country['country']: {
+                    u'country': new_country['country'],
                     u'countryKurdishName': '',
                     u'bearing': 0.5,
                     u'latitude': 0,

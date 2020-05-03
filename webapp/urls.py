@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import re_path
 from webapp.views import (
     countries_view,
-    database_update,
+    DatabaseUpdate,
     CovidStatisticsAPIView,
     CovidCountryAPIView,
 )
@@ -11,8 +11,12 @@ from webapp.views import (
 
 app_name = 'webapp'
 urlpatterns = [
-    re_path(r'^update/?$', database_update, name='database_update'),
-    re_path(r'^$', countries_view, name='countries'),
+    re_path(
+        r'^update/?$',
+        DatabaseUpdate.as_view(),
+        name='database_update'
+    ),
+    re_path(r'^$',countries_view, name='countries'),
     re_path(
         r'^v1/api/covid/?$',
         CovidStatisticsAPIView.as_view(),

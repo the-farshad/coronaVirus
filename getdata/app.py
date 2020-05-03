@@ -23,9 +23,19 @@ def main():
     # Show data will save in firestore
     if countries_data:
         if store_data_in_firebase(countries_data):
-            print(u'\n>>> Firebase connection and operation successfully ended.\n# Last Updated at >>> {}.\n'.format(datetime.now()))
+            print(
+                u'''\n>>> Firebase connection and operation successfully
+                ended.\n# Last Updated at >>> {}.\n'''.format(
+                    datetime.now()
+                )
+            )
         else:
-            print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now()))
+            print(
+                u'''\n>>> Every thing is updated.\n#
+                Last Checked at >>> {}.\n'''.format(
+                    datetime.now()
+                )
+            )
 
     # Get Kurdistan weather data from api and save in to firebase database
     weather = firestore_weather_data()
@@ -33,7 +43,12 @@ def main():
     # Get Exchange IQD rae data from api and save in to firebase database
     exchange = firestore_rate_data()
 
-    return countries_data, world_statistics,  weather, exchange
+    country_list = list()
+    for country in countries_data:
+        if countries_data[country]['_id'] is not None:
+            country_list.append(countries_data[country])
+
+    return country_list, world_statistics, weather, exchange
 
 
 if __name__ == "__main__":
