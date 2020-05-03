@@ -22,6 +22,7 @@ def kurdistan_data_gathered():
             if find_total_confirmed != -1:
                 kurdistan.update({
                     'Kurdistan': {
+                        u'country': 'Kurdistan',
                         u'countryKurdishName': 'کوردستان',
                         u'cases': int(text.split(':')[1]),
                         u'todayCases': 0,
@@ -33,6 +34,7 @@ def kurdistan_data_gathered():
                         u'zoom': 4,
                         u'priority': -1,
                         u'deathsPerOneMillion': 0,
+                        u'casesPerOneMillion': 0,
                         u'tests': 0,
                         u'testsPerOneMillion': 0,
                         u'_id': 0,

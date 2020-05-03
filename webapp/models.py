@@ -1,30 +1,40 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.urls import reverse
 
 
 # Create your models here.
 class Country(models.Model):
-    country = models.CharField(max_length=50, default='', verbose_name='Country Name')
-    countryKurdishName = models.CharField(max_length=50, default='', verbose_name='Kurdish Name')
-    _id = models.IntegerField(default=0)
+    country = models.CharField(
+        max_length=50,
+        default='',
+        verbose_name='Country Name'
+    )
+    countryKurdishName = models.CharField(
+        max_length=50,
+        default='',
+        verbose_name='Kurdish Name'
+    )
+    _id = models.PositiveSmallIntegerField(default=0)
     iso2 = models.CharField(max_length=2, default='')
     iso3 = models.CharField(max_length=3, default='')
     latitude = models.DecimalField(max_digits=14, decimal_places=10)
+    lat = models.DecimalField(max_digits=10, decimal_places=6, default=0)
     longitude = models.DecimalField(max_digits=14, decimal_places=10)
-    cases = models.IntegerField(default=0)
-    todayCases = models.IntegerField(default=0)
-    deaths = models.IntegerField(default=0)
-    todayDeaths = models.IntegerField(default=0)
-    recovered = models.IntegerField(default=0)
-    active = models.IntegerField(default=0)
-    critical = models.IntegerField(default=0)
-    casesPerOneMillion = models.IntegerField(default=0)
-    deathsPerOneMillion = models.IntegerField(default=0)
+    long = models.DecimalField(max_digits=10, decimal_places=6, default=0)
+    cases = models.PositiveIntegerField(default=0)
+    todayCases = models.PositiveIntegerField(default=0)
+    deaths = models.PositiveIntegerField(default=0)
+    todayDeaths = models.PositiveIntegerField(default=0)
+    recovered = models.PositiveIntegerField(default=0)
+    active = models.PositiveIntegerField(default=0)
+    critical = models.PositiveIntegerField(default=0)
+    tests = models.PositiveIntegerField(default=0)
+    casesPerOneMillion = models.PositiveIntegerField(default=0)
+    deathsPerOneMillion = models.PositiveIntegerField(default=0)
     bearing = models.DecimalField(max_digits=4, decimal_places=2)
     zoom = models.DecimalField(max_digits=4, decimal_places=2)
-    priority = models.IntegerField()
+    priority = models.SmallIntegerField()
     flag = models.URLField(max_length=200, default='')
     updated = models.DateTimeField(auto_now_add=True, blank=True)
     continent = models.CharField(max_length=20, default='', blank=True)

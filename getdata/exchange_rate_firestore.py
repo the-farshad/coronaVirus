@@ -30,6 +30,7 @@ def firestore_rate_data():
         collection.document('updated').set({'updated': datetime.fromtimestamp(update_time)})
     else:
         print('Ohhh, we had a problem! :| ')
+    return rates
 
 
 

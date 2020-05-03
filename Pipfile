@@ -10,6 +10,9 @@ psycopg2 = "*"
 firebase-admin = "*"
 bs4 = "*"
 lxml = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [dev-packages]
 

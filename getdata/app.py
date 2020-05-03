@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from .colors import Colors as C
 from .store_global_data import store_global
 from .get_data_api import detachment, total
 from .data_injection_json import data_injection
@@ -18,21 +17,23 @@ def main():
 
     countries_data = data_injection(detachment())
 
-    # Show data will save in firestore
+    # Store total statistics in database
+    world_statistics = store_global(total())
 
+    # Show data will save in firestore
     if countries_data:
         if store_data_in_firebase(countries_data):
             print(u'\n>>> Firebase connection and operation successfully ended.\n# Last Updated at >>> {}.\n'.format(datetime.now()))
         else:
             print(u'\n>>> Every thing is updated.\n# Last Checked at >>> {}.\n'.format(datetime.now()))
 
-    # Get data from api and save in firebase database
-    firestore_weather_data()
+    # Get Kurdistan weather data from api and save in to firebase database
+    weather = firestore_weather_data()
 
-    firestore_rate_data()
+    # Get Exchange IQD rae data from api and save in to firebase database
+    exchange = firestore_rate_data()
 
-
-    return countries_data
+    return countries_data, world_statistics,  weather, exchange
 
 
 if __name__ == "__main__":

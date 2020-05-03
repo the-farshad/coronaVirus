@@ -1,7 +1,6 @@
-import os
 import json
 
-from .get_data_api import detachment, total
+from .get_data_api import detachment
 from .kurdistan_corona_cases import kurdistan_data_gathered as kurdistan
 from .file_check import file_exists_check as exist
 from .file_check import file_abs_path as path
@@ -25,6 +24,7 @@ def data_injection(last_api_data):
         if country in data_raw:
             processed_data.update({
                 country: {
+                    u'country': country,
                     u'countryKurdishName': data_raw[country]['countryKurdishName'],
                     u'cases': api_data['cases'],
                     u'todayCases': api_data['todayCases'],
@@ -56,6 +56,7 @@ def data_injection(last_api_data):
             new_country_added.append(api_data)
             processed_data.update({
                 country: {
+                    u'country': country,
                     u'countryKurdishName': '',
                     u'cases': api_data['cases'],
                     u'todayCases': api_data['todayCases'],

@@ -1,17 +1,78 @@
 # -*- codeing: utf-8 -*-
 
 from json import JSONEncoder
-
 from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 from .models import Country
 from getdata import main
+from . import serializers
+
+
+data_gathered = {
+    'Af': {
+        'country': 'Afghanistan',
+        'countryKurdishName': 'ئەفغانستان',
+        '_id': 4,
+        'iso2': 'AF',
+        'iso3': 'AFG',
+        'latitude': '33.9391100000',
+        'lat': '33.000000',
+        'longitude': '67.7099530000',
+        'long': '65.000000',
+        'cases': 2704,
+        'todayCases': 235,
+        'deaths': 85,
+        'todayDeaths': 13,
+        'recovered': 345,
+        'active': 2274,
+        'critical': 7,
+        'tests': 11068,
+        'casesPerOneMillion': 69,
+        'deathsPerOneMillion': 2,
+        'bearing': '0.50',
+        'zoom': '3.00',
+        'priority': 16,
+        'flag': 'https://corona.lmao.ninja/assets/img/flags/af.png',
+        'continent': 'Asia'
+    },
+    'Af2': {
+        'country': 'Afghanistan',
+        'countryKurdishName': 'ئەفغانستان',
+        '_id': 4,
+        'iso2': 'AF',
+        'iso3': 'AFG',
+        'latitude': '33.9391100000',
+        'lat': '33.000000',
+        'longitude': '67.7099530000',
+        'long': '65.000000',
+        'cases': 2704,
+        'todayCases': 235,
+        'deaths': 85,
+        'todayDeaths': 13,
+        'recovered': 345,
+        'active': 2274,
+        'critical': 7,
+        'tests': 11068,
+        'casesPerOneMillion': 69,
+        'deathsPerOneMillion': 2,
+        'bearing': '0.50',
+        'zoom': '3.00',
+        'priority': 16,
+        'flag': 'https://corona.lmao.ninja/assets/img/flags/af.png',
+        'continent': 'Asia'
+    }
+}
 
 
 # Create your views here.
 def countries_view(request):
     # list of countries show in page
-    queryset = Country.objects.all()
+    queryset = Country.objects.all().order_by('priority')
     context = {
         'object_list': queryset,
     }
@@ -19,33 +80,46 @@ def countries_view(request):
 
 
 def database_update(request, *args, **kwargs):
-    data_gathered = main()
+    data_gathered, total, weather, exchange = main()
     Country.objects.all().delete()
-    for data in data_gathered:
-        if data_gathered[data]['_id'] is not None:
-            Country.objects.create(
-                country=data,
-                countryKurdishName=data_gathered[data]['countryKurdishName'],
-                cases=data_gathered[data]['cases'],
-                todayCases=data_gathered[data]['todayCases'],
-                deaths=data_gathered[data]['deaths'],
-                todayDeaths=data_gathered[data]['todayDeaths'],
-                recovered=data_gathered[data]['recovered'],
-                critical=data_gathered[data]['critical'],
-                active=data_gathered[data]['active'],
-                latitude=data_gathered[data]['latitude'],
-                longitude=data_gathered[data]['longitude'],
-                bearing=data_gathered[data]['bearing'],
-                zoom=data_gathered[data]['zoom'],
-                priority=data_gathered[data]['priority'],
-                flag=data_gathered[data]['flag'],
-                _id=data_gathered[data]['_id'],
-                iso2=data_gathered[data]['iso2'],
-                iso3=data_gathered[data]['iso3'],
-                updated=data_gathered[data]['updated'],
-                continent=data_gathered[data]['continent']
-            )
+    serialized_data = serializers.CountrySerializer(
+        data=data_gathered, many=True
+    )
+    if serialized_data.is_valid():
+        serialized_data.save()
     return JsonResponse(data_gathered, JSONEncoder)
+
+
+class CovidStatisticsAPIView(APIView):
+    def get(self, request, format=None):
+        try:
+            all_contries = Country.objects.all().order_by('priority').values()
+            return Response({'data': all_contries}, status=status.HTTP_200_OK)
+        except:
+            return Response(
+                {'status': 'Ohhhh, we had a f**king error'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class CovidCountryAPIView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        try:
+            '''get request from user and return country information with API'''
+            country_name = request.GET['country_name']
+            country_filter = \
+                Country.objects.filter(country__contains=country_name)
+            serialized_data = serializers.CountrySerializer(
+                country_filter,
+                many=True
+            )
+            data = serialized_data.data
+            return Response({'data': data}, status=status.HTTP_200_OK)
+        except:
+            return Response(
+                {'status': 'Ohhhh, we had a f**king errot'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 def handler404(request, *args, **kwargs):

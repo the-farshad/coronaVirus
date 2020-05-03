@@ -37,6 +37,7 @@ def firestore_weather_data():
         print(u"Kurdistan weather updated in {}, without error!>>> ".format(datetime.now()))
     else:
         print('Ohhh, we had a problem! :| ')
+        return weathers_data
 
 
 

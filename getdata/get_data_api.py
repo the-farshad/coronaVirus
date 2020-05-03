@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import time
 import requests
 from .colors import Colors as C
 
@@ -8,29 +7,27 @@ URL_ALL = 'https://corona.lmao.ninja/v2/all'
 URL_COUNTRIES = 'https://corona.lmao.ninja/v2/countries'
 
 
+# Get total information
 def total():
-    world = dict()
     response_all = requests.get(URL_ALL)
     satus_code_all = response_all.status_code
     if satus_code_all == 200:
         data_all = response_all.json()
         world = {
-            'world': {
-                u'countryKurdishName': 'جیهان',
-                u'cases': data_all['cases'],
-                u'recovered': data_all['recovered'],
-                u'deaths': data_all['deaths'],
-                u'todayCases': data_all['todayCases'],
-                u'todayDeaths': data_all['todayDeaths'],
-                u'critical': data_all['critical'],
-                u'latitude': 36.1674,
-                u'longitude': 43.9812,
-                u'bearing': 1,
-                u'zoom': 4,
-                u'priority': -1,
-                }
+            u'kurdishName': 'جیهان',
+            u'cases': data_all['cases'],
+            u'recovered': data_all['recovered'],
+            u'deaths': data_all['deaths'],
+            u'todayCases': data_all['todayCases'],
+            u'todayDeaths': data_all['todayDeaths'],
+            u'critical': data_all['critical'],
+            u'latitude': 36.1674,
+            u'longitude': 43.9812,
+            u'bearing': 1,
+            u'zoom': 4,
+            u'priority': -1,
             }
-        return data_all
+        return world
     else:
         return False
 

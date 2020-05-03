@@ -24,4 +24,5 @@ urlpatterns = [
     re_path(r'^', include('webapp.urls')),
     path('telegramapi/', include('telegramapi.urls')),
     path('admin/', admin.site.urls),
+    re_path(r'^api-auth/', include('rest_framework.urls')),
 ]
