@@ -24,15 +24,15 @@ def main():
     if countries_data:
         if store_data_in_firebase(countries_data):
             print(
-                u'''\n>>> Firebase connection and operation successfully
-                ended.\n# Last Updated at >>> {}.\n'''.format(
+                u'\n>>> Firebase connection and operation successfully \
+                ended.\n# Last Updated at >>> {}.\n'.format(
                     datetime.now()
                 )
             )
         else:
             print(
-                u'''\n>>> Every thing is updated.\n#
-                Last Checked at >>> {}.\n'''.format(
+                u'\n>>> Every thing is updated.\n#Last Checked \
+                at >>> {}.\n'.format(
                     datetime.now()
                 )
             )
@@ -46,6 +46,10 @@ def main():
     country_list = list()
     for country in countries_data:
         if countries_data[country]['_id'] is not None:
+            countries_data[country]['updated'] = \
+                datetime.fromtimestamp(
+                    countries_data[country]['updated'] / 1000
+                )
             country_list.append(countries_data[country])
 
     return country_list, world_statistics, weather, exchange

@@ -25,13 +25,20 @@ class DatabaseUpdate(APIView):
     def post(self, request, format=None, *args, **kwargs):
         try:
             data_gathered, total, weather, exchange = main()
-            Country.objects.all().delete()
+            queryset = Country.objects.all()
             serialized_data = serializers.CountrySerializer(
                 data=data_gathered,
                 many=True
             )
+
             if serialized_data.is_valid():
-                serialized_data.save()
+                datasets = serialized_data.data
+                for data in datasets:
+                    country_key = data.pop('country')
+                    queryset.filter(
+                        country=country_key
+                    ).update(**data)
+
             else:
                 print(serialized_data.errors)
             return Response(

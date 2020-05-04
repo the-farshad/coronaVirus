@@ -139,6 +139,8 @@ class CountrySerializer(serializers.ModelSerializer):
     continent = serializers.CharField(
         max_length=20
     )
+    updated = serializers.DateTimeField(
+    )
 
     class Meta:
         model = Country

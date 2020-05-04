@@ -32,6 +32,7 @@ class Country(models.Model):
     tests = models.PositiveIntegerField(default=0)
     casesPerOneMillion = models.PositiveIntegerField(default=0)
     deathsPerOneMillion = models.PositiveIntegerField(default=0)
+    testsPerOneMillion = models.PositiveIntegerField(default=0)
     bearing = models.DecimalField(max_digits=4, decimal_places=2)
     zoom = models.DecimalField(max_digits=4, decimal_places=2)
     priority = models.SmallIntegerField()
