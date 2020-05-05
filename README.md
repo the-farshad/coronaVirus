@@ -14,8 +14,11 @@
 
 ##  Installation
 First **clone** 
+
+```sh
 $ git clone https://github.com/the-farshad/coronaVirus.git
 ```
+
 You will need three Volumes, amd two docker netword, you can create with below command
 
 ```sh
