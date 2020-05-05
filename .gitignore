@@ -19,6 +19,9 @@ processed_information.json
 # Visual Studio Code
 .vscode
 
+# vim swap file
+*.swp
+
 lass
 
 # Python cache files
