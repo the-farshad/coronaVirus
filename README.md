@@ -3,6 +3,7 @@
 ## The following tools are required to run this project
 
 -   [Python 3](https://www.python.org/) - Programming Language
+-   [Firestore](https://console.firebase.google.com/) - Google NoSQL Database
 -   [Django](https://www.djangoproject.com/) - Web Framework
 -   [Django Rest Framework](https://www.django-rest-framework.org/) - Web API's
 -   [Gunicorn](https://gunicorn.org/) - WSGI HTTP Server
@@ -17,6 +18,14 @@ First **clone**
 
 ```sh
 $ git clone https://github.com/the-farshad/coronaVirus.git
+```
+If you wanna use the Firebase API, Weather API and Exchange rate API, you should set your token in below files
+
+```sh
+./getdata/ServiceAccountKey.json * Firebase API
+./getdata/Exchange_rate_api.json
+./getdata/WeatherAPI.json
+
 ```
 
 You will need three Volumes, amd two docker netword, you can create with below command
@@ -36,6 +45,8 @@ You need to change name .env.ample to .env file in the project root file with yo
 POSTGRES_USER=Postgres Username
 POSTGRES_PASSWORD=Postgres Password
 POSTGRES_DB=Postgres Databasename
+POSTGRES_HOST=Postgres Host Address
+POSTGRES_PORT=Postgres Port Number 
 ```
 Now run django and postgresql with **docker-compose**.
 ```sh
