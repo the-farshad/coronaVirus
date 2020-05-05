@@ -30,15 +30,15 @@ class DatabaseUpdate(APIView):
                 data=data_gathered,
                 many=True
             )
-
             if serialized_data.is_valid():
                 datasets = serialized_data.data
                 for data in datasets:
-                    country_key = data.pop('country')
-                    queryset.filter(
-                        country=country_key
+                    country_key = data['_id']
+                    flag = queryset.filter(
+                        _id=country_key
                     ).update(**data)
-
+                    if flag == 0:
+                        queryset.create(**data)
             else:
                 print(serialized_data.errors)
             return Response(
