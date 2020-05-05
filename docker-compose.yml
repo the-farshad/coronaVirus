@@ -1,7 +1,22 @@
 version: "3.8"
 
 services:
-
+  cv_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/cv_app
+      - cv_static_volume:/cv_app/static
+      - cv_files_volume:/cv_app/files
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - cv_network
+      - nginx_network
+    depends_on:
+      - cv_postgresql
   cv_postgresql:
     image: postgres:12
     container_name: coronavirus_postgresql
@@ -17,6 +32,12 @@ services:
 volumes:
   coronavirus_postgresql:
     external: true
+  cv_static_volume:
+    external: true
+  cv_files_volume:
+    external: true
 networks:
   cv_network:
+    external: true
+  nginx_network:
     external: true

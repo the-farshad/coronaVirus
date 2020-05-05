@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "593248c9ebd85d17c6cd38c950648af396ba9b29354a4ba583ecb03a4e4e4f87"
+            "sha256": "883e930c6492ba51237caa7ddd4d5d014d33c7ba9ed3727031a381ef524ee8d3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -68,11 +68,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:642d8eceab321ca743ae71e0f985ff8fdca59f07aab3a9fb362c617d23e33a76",
-                "sha256:d4666c2edefa38c5ede0ec1655424c56dc47ceb04b6d8d62a7eac09db89545c1"
+                "sha256:051ba55d42daa3eeda3944a8e4df2bc96d4c62f94316dea217248a22563c3621",
+                "sha256:9aaa6a09678e1b8f0d98a948c56482eac3e3dd2ddbfb8de70a868135ef3b5e01"
             ],
             "index": "pypi",
-            "version": "==3.0.5"
+            "version": "==3.0.6"
         },
         "django-filter": {
             "hashes": [
@@ -103,6 +103,7 @@
                 "sha256:c0e430658ed6be902d7ba7095fb0a9cac810270d71bf7ac4484e76c300407aae",
                 "sha256:e4082a0b479dc2dee2f8d7b80ea8b5d0184885b773caab15ab1836277a01d689"
             ],
+            "markers": "platform_python_implementation != 'PyPy'",
             "version": "==1.17.0"
         },
         "google-api-python-client": {
@@ -143,10 +144,10 @@
         },
         "google-cloud-storage": {
             "hashes": [
-                "sha256:07998ac15de406e7b7d72c98713d598e060399858a699eeb2ca45dc7f22a7af9",
-                "sha256:35ecd0b00d4b4147c666d73fa2a5c0c7d9a7fe0fe430a4f544d428f5dc68b544"
+                "sha256:0b28536acab1d7e856a7a89bbfcad41f26f40b46af59786ca874ff0f94bbc0f9",
+                "sha256:a7b5c326e7307a83fa1f1f0ef71aba9ad1f3a2bc6a768401e13fc02369fd8612"
             ],
-            "version": "==1.28.0"
+            "version": "==1.28.1"
         },
         "google-resumable-media": {
             "hashes": [
@@ -196,6 +197,14 @@
                 "sha256:f83b0c91796eb42865451a20e82246011078ba067ea0744f7301e12a94ae2e1b"
             ],
             "version": "==1.28.1"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626",
+                "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"
+            ],
+            "index": "pypi",
+            "version": "==20.0.4"
         },
         "httplib2": {
             "hashes": [

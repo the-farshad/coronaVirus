@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - cv_static_volume:/cv_app/static
+      - cv_files_volume:/cv_files_volume
+    networks:
+      - nginx_network
+
+volumes:
+  cv_static_volume:
+    external: true
+  cv_files_volume:
+    external: true
+networks:
+  nginx_network:
+    external: true

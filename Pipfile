@@ -13,6 +13,7 @@ lxml = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+gunicorn = "*"
 
 [dev-packages]
 

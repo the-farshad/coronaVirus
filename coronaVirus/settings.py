@@ -26,10 +26,7 @@ SECRET_KEY = '1k(b9g#0*4&#b_gqf67&ms)i0y(r5#a(t@b_vm^5g2rl7+jbs-'
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-        '192.168.100.20',
-        '0.0.0.0',
-        ]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,11 +81,11 @@ WSGI_APPLICATION = 'coronaVirus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("CV_DB_NAME", ''),
-        'USER': os.environ.get("CV_DB_USER", ''),
-        'PASSWORD': os.environ.get("CV_DB_PASSWORD", ''),
-        'HOST': os.environ.get("CV_DB_HOST", ''),
-        'PORT': os.environ.get("CV_DB_PORT", ''),
+        'NAME': 'cd_DB',
+        'USER': 'cv_dbUser',
+        'PASSWORD': 'djk2C#x8*,Wasdsdf',
+        'HOST': 'cv_postgresql',
+        'PORT': '5432',
     }
 }
 
@@ -129,11 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 
 # Media files
