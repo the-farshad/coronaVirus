@@ -10,7 +10,6 @@ COPY . /cv_app
 ADD requirements.txt /cv_app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN source .env
 
 RUN python manage.py collectstatic --no-input
 

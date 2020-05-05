@@ -10,6 +10,7 @@ services:
       - cv_static_volume:/cv_app/static
       - cv_files_volume:/cv_app/files
     restart: always
+    env_file: .env
     ports:
       - "8000:8000"
     networks:
