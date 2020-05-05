@@ -9,7 +9,7 @@
 -   [PostgreSQL](https://www.postgresql.org/) - PostgreSQL Database
 -   [NginX](https://www.nginx.com/) - High performance web server
 -   [Docker](https://www.docker.com/) - Container Platform
--   [Docker Compose] (https://docs.docker.com/compose/) - Multi-container Docker applications.
+-   [Docker Compose](https://docs.docker.com/compose/) - Multi-container Docker applications.
 -   [Git](https://git-scm.com/) - Version Control
 
 ##  Installation
@@ -23,6 +23,7 @@ $ docker volume create coronavirus_postgresql
 $ docker volume create cv_static_volume
 $ docker volume create cv_files_volume
 ```
+
 ```sh
 $ docker network create nginx_network
 $ docker network create cv_network
