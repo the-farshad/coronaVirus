@@ -68,7 +68,7 @@ $ docker-compose up -d
 Contributions are  **welcome**  and will be fully  **credited**. I'd be happy to accept PRs for template extending.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/the-farshad/coronaVirus/blob/master/LICENSE) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/the-farshad/coronaVirus/blob/main/LICENSE) file for details
 
 > ###### Good Luck!
 > May the force be with you
